@@ -6,7 +6,7 @@
 <title>Betty — UX Designer, Singapore</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="portfolio.css" />
 <template id="__bundler_thumbnail" data-bg-color="#0c0e14">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +26,18 @@
   <a class="brand" href="#top"><image-slot id="brand-logo" class="brand-logo" shape="circle" placeholder="Logo"></image-slot>Betty&nbsp;Goh</a>
   <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   <div class="nav-links" id="navLinks">
-    <a href="#work">Work</a>
+    <div class="nav-item-drop">
+      <a href="Work.html" class="nav-drop-trigger">Work <svg class="chev" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div class="nav-drop">
+        <a href="Work.html" class="nav-drop-all">All work <span class="arrow">→</span></a>
+        <a href="Case Study.html"><span class="num">01</span>Trust, built for 2&nbsp;a.m.</a>
+        <a href="Work.html"><span class="num">02</span>Paperwork, minus the dread.</a>
+        <a href="Work.html"><span class="num">03</span>A feedback loop people enjoy.</a>
+        <a href="Work.html"><span class="num">04</span>Numbers that calm you down.</a>
+        <a href="Work.html"><span class="num">05</span>Onboarding without the drop-off.</a>
+        <a href="Work.html"><span class="num">06</span>A design system that scaled.</a>
+      </div>
+    </div>
     <a href="Side Quests.html">Side quests</a>
     <a href="About.html">About</a>
     <a href="#contact" class="cta">Let's talk</a>
@@ -34,7 +45,7 @@
 </nav>
 
 <!-- ===================== HERO ===================== -->
-<header class="hero" id="top">
+<header class="hero" id="top" style="padding: 200px 0px 120px">
   <div class="hero-stage load-fade" aria-hidden="true">
     <div class="orb a"></div>
     <div class="orb b"></div>
@@ -49,110 +60,85 @@
 
   <div class="wrap">
     <div class="hero-grid">
-      <p class="hero-lede load-up" style="--ld:80ms; margin: 20px 0px 29px; color: rgb(22, 26, 35)">
-        Hi, I'm Betty — a UX designer based in Singapore<svg class="ic-in" style="color:#3A6DF0" width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 14.3s4.2-4.1 4.2-7.4A4.2 4.2 0 0 0 8 2.7a4.2 4.2 0 0 0-4.2 4.2C3.8 10.2 8 14.3 8 14.3z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6.8" r="1.6" fill="currentColor"/></svg>. Right now I'm at
-        <strong style="color:var(--ink);font-weight:600">GovTech</strong><svg class="ic-in" style="color:#E86AA6" width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.2l5.6 3H2.4l5.6-3z" fill="currentColor"/><path d="M4 6.6v4.8M6.6 6.6v4.8M9.4 6.6v4.8M12 6.6v4.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M2.6 13.2h10.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>, making public
-        services easier for everyone to use. Before that, I spent years in fintech<svg class="ic-in" style="color:#34A06B" width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.6 10.6L6 7.1l2.3 2.3 5.1-5.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.6 4.3h3v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>.
-      </p>
-      <div class="hero-meta load-up" style="--ld:200ms">
-        <span class="chip" style="color: rgb(22, 26, 35); background-color: rgb(255, 255, 255); border-color: rgb(200, 200, 200)"><span class="led"></span> Open to select projects</span>
+      <p class="hero-lede load-up" style="--ld: 80ms; margin: 20px 0px 29px; color: rgb(22, 26, 35); font-size: 24px">Hi, I'm Betty — a UX designer based in Singapore. Right now I'm at GovTech, making public services easier for everyone to use. Before that, I was at ADDX, designing for fintech.</p>
+      <div class="hero-meta" style="--ld:200ms">
+        <span class="chip" style="color: rgb(22, 26, 35); background-color: rgb(255, 255, 255); border-color: rgb(200, 200, 200)"><span class="led"></span>Open to full-time opportunities</span>
         <span class="chip" style="border-color: rgb(200, 200, 200)"><svg class="chip-ic" style="color:#E86AA6" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.4l1.7 4.9 4.9 1.7-4.9 1.7L8 14.6l-1.7-4.9L1.4 8l4.9-1.7z" fill="currentColor"/></svg>Fintech → Public good</span>
-        <span class="chip" style="border-color: rgb(200, 200, 200)"><svg class="chip-ic" style="color:#3A6DF0" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.2" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.6V8l2.4 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>10+ years shipping</span>
-      </div>
-      <div class="hero-cta load-up" style="--ld:300ms">
-        <a href="#work" class="btn btn-primary">See selected work <span class="arrow">→</span></a>
-        <a href="#contact" class="btn btn-ghost">Say hello</a>
+        <span class="chip" style="border-color: rgb(200, 200, 200)"><svg class="chip-ic" style="color:#3A6DF0" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.2" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.6V8l2.4 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>4+ years shipping</span>
       </div>
     </div>
   </div>
 
-  <div class="scroll-hint" aria-hidden="true"><span class="track"></span> Scroll</div>
 </header>
 
 <!-- ===================== WORK ===================== -->
 <section class="section-pad" id="work">
   <div class="wrap">
     <div class="section-head reveal">
-      <h2>Selected work</h2>
+      <h2 style="font-family: Newsreader">Selected work</h2>
     </div>
-    <p class="section-sub reveal" style="--d:80ms">A few things I've shipped. Full case studies available on request — I like to walk through the messy middle in person.</p>
+    <p class="section-sub reveal" style="--d:80ms">A few things I've shipped. </p>
 
-    <div class="work-list">
+    <div class="case-list">
 
-      <a class="project reveal" href="#" style="--d:0ms">
-        <span class="p-index">01</span>
-        <div class="p-thumb">
-          <div class="ph"></div>
-          <div class="swatch" style="background:radial-gradient(120% 120% at 25% 20%, #7FA0DE, #4B6BB0 60%, #2E406E)"></div>
-          <div class="glow"></div>
-          <span class="ph-tag">replace · case-study cover</span>
+      <a class="case reveal" href="Case Study.html" style="--cbg:#1C2A5E; --cink:#EAF0FF; --d:0ms">
+        <div class="case-copy">
+          <div class="case-top">
+            <span class="case-eyebrow">01 · JUNE 2026</span>
+            <h3 class="case-title" style="font-weight: 400">Improving the Quest Pages</h3>
+            <p class="case-desc">A digital wallet redesign where failure states, empty screens and the scary edge cases got as much love as the happy path.</p>
+          </div>
+          <div class="case-tags"><span>GovTech</span><span>Engagement</span><span>Redesign</span></div>
         </div>
-        <div class="p-main">
-          <span class="p-date">March 2025</span>
-          <h3 class="p-title">Trust, built for 2&nbsp;a.m.</h3>
-          <p class="p-desc">A digital wallet redesign where failure states, empty screens and the scary edge cases got as much love as the happy path.</p>
-          <div class="p-tags"><span class="p-tag">Fintech</span><span class="p-tag">Mobile</span><span class="p-tag">0→1</span></div>
+        <div class="case-media">
+          <image-slot id="home-case-1" class="case-slot" shape="rounded" placeholder="Drop case-study cover"></image-slot>
         </div>
-        <span class="p-go" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
+        <span class="case-go" aria-hidden="true">↗</span>
       </a>
 
-      <a class="project reveal" href="#" style="--d:80ms">
-        <span class="p-index">02</span>
-        <div class="p-thumb">
-          <div class="ph"></div>
-          <div class="swatch" style="background:radial-gradient(120% 120% at 80% 15%, #8FC0A6, #5E9A7E 58%, #3C6B55)"></div>
-          <div class="glow"></div>
-          <span class="ph-tag">replace · case-study cover</span>
+      <a class="case reveal" href="#" style="--cbg:#D9602C; --cink:#FFF2EA; --d:80ms">
+        <div class="case-copy">
+          <div class="case-top">
+            <span class="case-eyebrow">02 · January 2025</span>
+            <h3 class="case-title">Paperwork, minus the dread.</h3>
+            <p class="case-desc">A citizen-services flow rebuilt around real people on bad days — fewer fields, plainer words, and a path that forgives mistakes.</p>
+          </div>
+          <div class="case-tags"><span>GovTech</span><span>Service design</span><span>Accessibility</span></div>
         </div>
-        <div class="p-main">
-          <span class="p-date">January 2025</span>
-          <h3 class="p-title">Paperwork, minus the dread.</h3>
-          <p class="p-desc">A citizen-services flow rebuilt around real people on bad days — fewer fields, plainer words, and a path that forgives mistakes.</p>
-          <div class="p-tags"><span class="p-tag">GovTech</span><span class="p-tag">Service design</span><span class="p-tag">Accessibility</span></div>
+        <div class="case-media">
+          <image-slot id="home-case-2" class="case-slot" shape="rounded" placeholder="Drop case-study cover"></image-slot>
         </div>
-        <span class="p-go" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
+        <span class="case-go" aria-hidden="true">↗</span>
       </a>
 
-      <a class="project reveal" href="#" style="--d:0ms">
-        <span class="p-index">03</span>
-        <div class="p-thumb">
-          <div class="ph"></div>
-          <div class="swatch" style="background:radial-gradient(120% 120% at 30% 80%, #C7A6D8, #9A7FC4 58%, #6B5A9E)"></div>
-          <div class="glow"></div>
-          <span class="ph-tag">replace · case-study cover</span>
+      <a class="case reveal" href="#" style="--cbg:#1F5E54; --cink:#E9F6F1; --d:0ms">
+        <div class="case-copy">
+          <div class="case-top">
+            <span class="case-eyebrow">03 · September 2024</span>
+            <h3 class="case-title">A feedback loop people enjoy.</h3>
+            <p class="case-desc">A community engagement platform that turned “tell us what you think” from a chore into something residents actually came back to.</p>
+          </div>
+          <div class="case-tags"><span>Engagement</span><span>Research</span><span>Web</span></div>
         </div>
-        <div class="p-main">
-          <span class="p-date">September 2024</span>
-          <h3 class="p-title">A feedback loop people enjoy.</h3>
-          <p class="p-desc">A community engagement platform that turned “tell us what you think” from a chore into something residents actually came back to.</p>
-          <div class="p-tags"><span class="p-tag">Engagement</span><span class="p-tag">Research</span><span class="p-tag">Web</span></div>
+        <div class="case-media">
+          <image-slot id="home-case-3" class="case-slot" shape="rounded" placeholder="Drop case-study cover"></image-slot>
         </div>
-        <span class="p-go" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
+        <span class="case-go" aria-hidden="true">↗</span>
       </a>
 
-      <a class="project reveal" href="#" style="--d:80ms">
-        <span class="p-index">04</span>
-        <div class="p-thumb">
-          <div class="ph"></div>
-          <div class="swatch" style="background:radial-gradient(120% 120% at 70% 30%, #E0B197, #C2855F 58%, #97603F)"></div>
-          <div class="glow"></div>
-          <span class="ph-tag">replace · case-study cover</span>
+      <a class="case reveal" href="#" style="--cbg:#463A6E; --cink:#F0ECFA; --d:80ms">
+        <div class="case-copy">
+          <div class="case-top">
+            <span class="case-eyebrow">04 · May 2024</span>
+            <h3 class="case-title">Numbers that calm you down.</h3>
+            <p class="case-desc">An investing dashboard for nervous first-timers — clear hierarchy, honest data, and zero dark patterns nudging you to over-trade.</p>
+          </div>
+          <div class="case-tags"><span>Fintech</span><span>Data viz</span><span>Design system</span></div>
         </div>
-        <div class="p-main">
-          <span class="p-date">May 2024</span>
-          <h3 class="p-title">Numbers that calm you down.</h3>
-          <p class="p-desc">An investing dashboard for nervous first-timers — clear hierarchy, honest data, and zero dark patterns nudging you to over-trade.</p>
-          <div class="p-tags"><span class="p-tag">Fintech</span><span class="p-tag">Data viz</span><span class="p-tag">Design system</span></div>
+        <div class="case-media">
+          <image-slot id="home-case-4" class="case-slot" shape="rounded" placeholder="Drop case-study cover"></image-slot>
         </div>
-        <span class="p-go" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
+        <span class="case-go" aria-hidden="true">↗</span>
       </a>
 
     </div>
@@ -176,12 +162,13 @@
       <div class="about-body reveal" style="--d:120ms">
         <div class="about-id-text">
           <div class="who">Betty Goh</div>
-          <div class="role">Designer · GovTech, Singapore</div>
+          <div class="role">UX Designer · GovTech, Singapore</div>
         </div>
         <p class="lead">I design calm, human products for the messy real world — and I'm a little obsessed with the parts nobody thanks you for.</p>
         <p>Today I design citizen-facing services at <strong>GovTech</strong>, where “the user” is genuinely everyone — every age, every language, every level of patience. It's the most humbling brief I've ever had.</p>
         <p>Before this, I spent my <strong>fintech</strong> years learning that trust is built in the boring moments: the error message, the empty state, the 2&nbsp;a.m. edge case. Now I bring that same stubborn care to things millions of people quietly rely on.</p>
-        <p>Confident in the work, relaxed about the ego. I'll happily kill my favourite screen if the research says so.</p>
+        <p>
+</p>
       </div>
     </div>
   </div>
@@ -193,7 +180,7 @@
     <div class="contact-row">
       <div class="contact-main">
         <span class="eyebrow reveal">Get in touch</span>
-        <a class="mailto reveal" style="--d:60ms" href="mailto:hello@bettygoh.design">hello@bettygoh.design <span class="arrow">↗</span></a>
+        <a class="mailto reveal" style="--d:60ms" href="/cdn-cgi/l/email-protection#761e131a1a1936141302020f11191e581213051f1118"><span class="__cf_email__" data-cfemail="61060e090d0812080f06030415151821060c00080d4f020e0c">[email&#160;protected]</span>↗</a>
         <p class="reveal" style="--d:120ms">Some of my best thinking happens over a slow bowl of noodles and a plate of cut fruit — small, unfussy acts of care. Consider this a little of that, from me to you. Thanks for stopping by.</p>
         <div class="socials reveal" style="--d:180ms">
           <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"/></svg>LinkedIn</a>
@@ -217,7 +204,7 @@
 <!-- Tweaks mount -->
 <div id="tweaks-root"></div>
 
-<script src="image-slot.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="image-slot.js"></script>
 
 <!-- ===================== INTERACTIONS ===================== -->
 <script>
@@ -239,7 +226,7 @@
     navLinks.addEventListener('click', (e) => { if (e.target.tagName === 'A') setOpen(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
   }
-  const loadEls = document.querySelectorAll('.load-up, .load-fade');
+  const loadEls = document.querySelectorAll('.load-up, .load-fade, .hero-meta .chip');
   requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
   setTimeout(() => {
     document.body.classList.add('loaded');

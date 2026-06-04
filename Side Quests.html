@@ -6,7 +6,7 @@
 <title>Side quests — Betty Goh</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="portfolio.css" />
 <template id="__bundler_thumbnail" data-bg-color="#0c0e14">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
@@ -23,20 +23,31 @@
 
 <!-- ===================== NAV ===================== -->
 <nav class="nav scrolled" id="nav">
-  <a class="brand" href="Betty — Portfolio.html"><image-slot id="brand-logo" class="brand-logo" shape="circle" placeholder="Logo"></image-slot>Betty&nbsp;Goh</a>
+  <a class="brand" href="Betty - Portfolio.html"><image-slot id="brand-logo" class="brand-logo" shape="circle" placeholder="Logo"></image-slot>Betty&nbsp;Goh</a>
   <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   <div class="nav-links" id="navLinks">
-    <a href="Betty — Portfolio.html#work">Work</a>
+    <div class="nav-item-drop">
+      <a href="Work.html" class="nav-drop-trigger">Work <svg class="chev" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div class="nav-drop">
+        <a href="Work.html" class="nav-drop-all">All work <span class="arrow">→</span></a>
+        <a href="Case Study.html"><span class="num">01</span>Trust, built for 2&nbsp;a.m.</a>
+        <a href="Work.html"><span class="num">02</span>Paperwork, minus the dread.</a>
+        <a href="Work.html"><span class="num">03</span>A feedback loop people enjoy.</a>
+        <a href="Work.html"><span class="num">04</span>Numbers that calm you down.</a>
+        <a href="Work.html"><span class="num">05</span>Onboarding without the drop-off.</a>
+        <a href="Work.html"><span class="num">06</span>A design system that scaled.</a>
+      </div>
+    </div>
     <a href="Side Quests.html">Side quests</a>
     <a href="About.html">About</a>
-    <a href="Betty — Portfolio.html#contact" class="cta">Let's talk</a>
+    <a href="Betty - Portfolio.html#contact" class="cta">Let's talk</a>
   </div>
 </nav>
 
 <!-- ===================== HEADER ===================== -->
 <header class="archive-head">
   <div class="wrap">
-    <a class="back load-up" href="Betty — Portfolio.html" style="--ld:0ms">← Back home</a>
+    <a class="back load-up" href="Betty - Portfolio.html" style="--ld:0ms">← Back home</a>
     <h1 class="load-up" style="--ld:80ms">Side <span class="em">quests.</span></h1>
     <p class="load-up" style="--ld:160ms">When I'm not designing, I'm usually somewhere with a camera — no client, no brief, just light I liked. A growing roll of streets, skies and small Singapore moments.</p>
   </div>
@@ -95,7 +106,7 @@
     </div>
 
     <div class="work-cta reveal" style="margin-top: clamp(56px, 9vh, 96px)">
-      <a class="btn btn-ghost" href="Betty — Portfolio.html#contact">Say hello <span class="arrow">→</span></a>
+      <a class="btn btn-ghost" href="Betty - Portfolio.html#contact">Say hello <span class="arrow">→</span></a>
     </div>
 
   </div>
@@ -107,7 +118,7 @@
     <div class="contact-row">
       <div class="contact-main">
         <span class="eyebrow reveal">Get in touch</span>
-        <a class="mailto reveal" style="--d:60ms" href="mailto:hello@bettygoh.design">hello@bettygoh.design <span class="arrow">↗</span></a>
+        <a class="mailto reveal" style="--d:60ms" href="/cdn-cgi/l/email-protection#4c24292020230c2e293838352b23246228293f252b22"><span class="__cf_email__" data-cfemail="acc4c9c0c0c3eccec9d8d8d5cbc3c482c8c9dfc5cbc2">[email&#160;protected]</span> <span class="arrow">↗</span></a>
         <p class="reveal" style="--d:120ms">Some of my best thinking happens over a slow bowl of noodles and a plate of cut fruit — small, unfussy acts of care. Consider this a little of that, from me to you. Thanks for stopping by.</p>
         <div class="socials reveal" style="--d:180ms">
           <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"/></svg>LinkedIn</a>
@@ -125,11 +136,11 @@
 
 <footer class="foot">
   <span>© 2026 Betty Goh · Designed in Singapore 🇸🇬</span>
-  <a href="Betty — Portfolio.html">Back to home ↑</a>
+  <a href="Betty - Portfolio.html">Back to home ↑</a>
 </footer>
 
 <!-- ===================== COMPONENTS + INTERACTIONS ===================== -->
-<script src="image-slot.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="image-slot.js"></script>
 <script>
   const nav = document.getElementById('nav');
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
