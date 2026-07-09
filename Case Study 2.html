@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" data-motion="off">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Turning browsers into investors — Betty Goh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="assets/betty-monogram-ring-ink.svg" />
+<link rel="stylesheet" href="portfolio.css" />
+<style>
+  /* ---- Work card v2 (matches home) for the Up-next card ---- */
+  .case-list { gap: clamp(56px, 8vw, 104px); }
+  .case {
+    display: flex; flex-direction: column;
+    gap: clamp(16px, 1.8vw, 24px);
+    min-height: 0; padding: 0; border-radius: 0;
+    background: transparent; color: var(--ink); overflow: visible;
+  }
+  .case:hover { transform: none; box-shadow: none; }
+  .case-copy { gap: 0; }
+  .case-top { max-width: 64ch; gap: 8px; }
+  .case:hover .case-eyebrow, .case:hover .case-title { transform: none; }
+  .case-eyebrow { color: var(--accent-press); opacity: 1; letter-spacing: 0.14em; }
+  .case-title {
+    font-family: var(--font-head); font-weight: 600; color: var(--ink);
+    font-size: clamp(24px, 2.6vw, 34px); line-height: 1.12; letter-spacing: -0.015em;
+  }
+  .case-desc, .case-tags, .case-go { display: none; }
+  .case-media {
+    position: relative; margin: 0;
+    border: 1px solid var(--line); border-radius: clamp(18px, 2vw, 28px);
+    background: var(--bg-2); overflow: hidden;
+  }
+  .case-media img.case-slot {
+    position: static; inset: auto; width: 100%; height: auto; display: block;
+  }
+  .case:hover .case-media img.case-slot { transform: scale(1.02); }
+</style>
+<style>
+  /* Fintech accent for the ADDX product-discovery case study */
+  body { --accent: #2A6FDB; --accent-press: #1F58B4; --font-body: "Inter", system-ui, sans-serif; }
+  /* Real exported images styled to match the image-slot frames */
+  .cs-cover-img {
+    display: block; width: 100%; height: auto;
+    border: 1px solid var(--line); background: var(--bg-2);
+    border-radius: 24px; margin-top: clamp(28px, 5vw, 52px);
+  }
+  .cs-figure img.cs-img {
+    display: block; width: 100%; height: auto;
+    border: 1px solid var(--line); background: var(--bg-2);
+    border-radius: 16px;
+  }
+  .cs-wide .cs-shot {
+    display: block; width: 100%; height: auto;
+    border: 1px solid var(--line); background: var(--bg-2);
+    border-radius: 18px;
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  }
+  .cs-wide figure:hover .cs-shot {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 56px -30px oklch(0.4 0.04 255 / 0.5);
+  }
+  .cs-duo {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: clamp(16px, 2vw, 24px); margin-top: clamp(28px, 5vw, 52px);
+  }
+  @media (max-width: 720px) { .cs-duo { grid-template-columns: 1fr; } }
+  /* vertical stack so each image is full-width and larger */
+  .cs-stack { display: grid; grid-template-columns: 1fr; gap: clamp(32px, 5vw, 56px); margin-top: clamp(28px, 4vw, 44px); }
+  /* Numbered insight / success-metric list */
+  .cs-numlist { list-style: none; margin: clamp(20px,3vw,30px) 0 0; padding: 0; display: grid; gap: 2px; }
+  .cs-numlist li {
+    display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: start;
+    padding: 20px 0; border-top: 1px solid var(--line);
+  }
+  .cs-numlist li:last-child { border-bottom: 1px solid var(--line); }
+  .cs-numlist .n {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.8rem; font-weight: 600; color: var(--accent);
+    background: #E3EDFC; border-radius: 999px;
+    width: 30px; height: 30px; display: grid; place-items: center; margin-top: 2px;
+  }
+  .cs-numlist .t { font-size: clamp(1rem, 1.4vw, 1.12rem); line-height: 1.5; color: var(--ink); }
+  .cs-numlist .t strong { font-weight: 600; }
+  /* Hide the accent dot on section labels for this case study */
+  .cs-label .dot { display: none; }
+  /* 2×2 bento grid for goal / research / audit */
+  .cs-bento {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: clamp(14px, 1.5vw, 20px); margin: clamp(20px, 3vw, 30px) 0 0;
+  }
+  .cs-bento .cell {
+    border: 1px solid var(--line); border-radius: 18px;
+    background: var(--bg-2);
+    padding: clamp(22px, 2.4vw, 30px);
+    display: flex; flex-direction: column; gap: 12px;
+    transition: border-color 0.4s var(--ease), transform 0.4s var(--ease);
+  }
+  .cs-bento .cell:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .cs-bento .cell .n {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.78rem; font-weight: 600; color: var(--accent);
+    background: #E3EDFC; border-radius: 999px;
+    width: 30px; height: 30px; display: grid; place-items: center;
+  }
+  .cs-bento .cell h4 {
+    font-family: var(--font-head); font-weight: 600;
+    font-size: clamp(1rem, 1.4vw, 1.12rem); letter-spacing: -0.01em;
+    margin: 0; color: var(--ink); line-height: 1.2;
+  }
+  .cs-bento .cell p {
+    margin: 0; font-size: clamp(0.92rem, 1.2vw, 1rem);
+    line-height: 1.5; color: var(--ink-2, var(--ink));
+  }
+  @media (max-width: 720px) { .cs-bento { grid-template-columns: 1fr; } }
+  /* let a bento sit in the content column at full width */
+  .cs-section > .cs-bento { grid-column: 2; margin-top: clamp(6px, 1.5vw, 14px); }
+  @media (max-width: 820px) { .cs-section > .cs-bento { grid-column: 1; } }
+  /* tighten the gap between a description and its bento */
+  .cs-section.tight { row-gap: clamp(10px, 1.4vw, 16px); }
+  .cs-section.tight > .cs-bento { margin-top: 0; }
+  /* concept-testing images span the full content width (larger) */
+  .cs-section > .cs-duo { grid-column: 1 / -1; }
+  /* smaller hero title, wide enough to wrap to ~2 lines on desktop */
+  .cs-hero .cs-title { font-size: clamp(34px, 6vw, 56px); line-height: 1.1; max-width: 42ch; text-wrap: pretty; }
+  /* project goal: let the statement fill the column (wraps to ~3 lines) */
+  .cs-section.goal .cs-prose { max-width: none; }
+  .cs-section.goal .pull { max-width: none; text-wrap: pretty; }
+  /* "Success metrics" heading + 16px gap down to the bento */
+  .cs-section.goal { row-gap: 16px; }
+  .cs-section.goal h3 { font-family: "Inter", system-ui, sans-serif; font-size: 24px; font-weight: 600; margin-bottom: 0; }
+  /* smaller hero description */
+  .cs-hero .cs-lede { font-size: 16px; }
+  /* 16px gap between a figure and the paragraph that follows it */
+  .cs-prose .cs-figure + p { margin-top: 16px; }
+</style>
+<template id="__bundler_thumbnail" data-bg-color="#0c0e14">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0c0e14"/>
+    <rect x="380" y="250" width="440" height="200" rx="20" fill="none" stroke="#3A6DF0" stroke-width="9"/>
+    <text x="600" y="380" font-family="Georgia, serif" font-size="72" font-style="italic" fill="#ffffff" text-anchor="middle">ADDX.</text>
+    <text x="600" y="560" font-family="Helvetica, Arial, sans-serif" font-size="24" letter-spacing="4" fill="#8a90a0" text-anchor="middle">BETTY GOH — DEEP DIVE</text>
+  </svg>
+</template>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav scrolled" id="nav">
+  <a class="brand" href="Betty - Portfolio.html"><img class="brand-mark" src="assets/betty-wordmark-sans.svg" alt="Betty" /></a>
+  <div class="nav-end">
+    <div class="nav-links" id="navLinks">
+      <div class="nav-item-drop">
+        <a href="Work.html" class="nav-drop-trigger">Work <svg class="chev" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="nav-drop">
+          <a href="Work.html" class="nav-drop-all">All work <span class="arrow">→</span></a>
+          <a href="Case Study.html"><span class="num">01</span>Increasing app downloads with redesigned app store previews.</a>
+          <a href="Case Study 2.html"><span class="num">02</span>Enhancing product discovery for investors.</a>
+          <a href="Case Study 3.html"><span class="num">03</span>Design System 2.0 — interface foundations.</a>
+        </div>
+      </div>
+      <a href="About.html">About</a>
+      <a href="Betty - Portfolio.html#contact" class="cta">Let's talk</a>
+    </div>
+    <div class="theme-toggle" role="group" aria-label="Theme">
+      <button type="button" data-theme-choice="light" aria-label="Light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <button type="button" data-theme-choice="dark" aria-label="Dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></button>
+      <button type="button" data-theme-choice="system" aria-label="System theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="cs-hero">
+  <div class="wrap">
+    <a class="back load-up" href="Work.html" style="--ld:0ms">← All work</a>
+    <span class="cs-eyebrow load-up" style="--ld:60ms">Case study · Fintech / Product discovery</span>
+    <h1 class="cs-title load-up" style="--ld:120ms">Enhancing the product discovery experience for confident decision-making.</h1>
+    <p class="cs-lede load-up" style="--ld:200ms">Enhancing the product discovery experience for confident decision-making. ADDX is an investment platform offering access to private market investments and alternatives in fractions, made possible with blockchain. This project improved product discovery across both the app and web platforms.</p>
+
+    <div class="cs-meta load-up" style="--ld:280ms">
+      <div class="m"><span class="k">Role</span><span class="v">Product Designer</span></div>
+      <div class="m"><span class="k">Team</span><span class="v">1 PD · 1 UXR · 3 Eng · 1 PM · 1 Data Analyst</span></div>
+      <div class="m"><span class="k">Timeline</span><span class="v">Jul – Sep 2023</span></div>
+      <div class="m"><span class="k">Tools</span><span class="v">Figma · Maze</span></div>
+    </div>
+
+    <img class="cs-cover-img" src="https://cdn.prod.website-files.com/64f34489ccd100a57da8e9a1/66af419d1da979ff4b974af8_Cover.png" alt="ADDX product discovery redesign — cover" loading="lazy" />
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- OUR FOCUS -->
+  <section class="cs-section reveal">
+    <div class="cs-label"><span class="dot"></span>Our focus</div>
+    <div class="cs-prose">
+      <h3>The product listing page — the gateway to becoming an investor.</h3>
+      <p>The product listing page is where users discover investment products, so it's the essential entry point that turns a curious sign-up into an active investor.</p>
+      <figure class="cs-figure">
+        <img class="cs-img" src="https://cdn.prod.website-files.com/64f34489ccd100a57da8e9a1/6799eebbfda6305a09e1074f_Frame%20427318901.png" alt="The product listing page as the gateway for users to become investors" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- BACKGROUND -->
+  <section class="cs-section reveal">
+    <div class="cs-label"><span class="dot"></span>Background</div>
+    <div class="cs-prose">
+      <h3>New users weren't transitioning into active users.</h3>
+      <p>An active user is someone who invests within 30 days of signing up. Too many new users were stalling before that first investment — and the product listing page was a notable hurdle.</p>
+      <figure class="cs-figure">
+        <img class="cs-img" src="https://cdn.prod.website-files.com/64f34489ccd100a57da8e9a1/679b0b73037f3d364acaa8b9_Frame%20427318902.png" alt="Funnel showing new users not transitioning into active users" loading="lazy" />
+      </figure>
+      <p>Because the product listing page serves as the gateway for users to discover investment products, stakeholders unanimously agreed that optimising this crucial funnel point would yield the most impactful results.</p>
+    </div>
+  </section>
+
+  <!-- PROJECT GOAL + SUCCESS METRICS -->
+  <section class="cs-section tight goal reveal">
+    <div class="cs-label"><span class="dot"></span>Project goal</div>
+    <div class="cs-prose">
+      <p class="pull">Improve the product listing page by enhancing navigation, filter functionality and the information hierarchy of the invest card — and in turn, lift user activation rates.</p>
+      <h3>Success metrics</h3>
+    </div>
+    <div class="cs-bento">
+      <div class="cell"><span class="n">1</span><h4>Listing → detail CTR</h4><p>Increase click-through rate from the product listing to the product detail page.</p></div>
+      <div class="cell"><span class="n">2</span><h4>Filter usage</h4><p>Increase the click-through rate of the exposed filters on app and web.</p></div>
+      <div class="cell"><span class="n">3</span><h4>Watchlist engagement</h4><p>Increase watchlist engagement of investment products.</p></div>
+      <div class="cell"><span class="n">4</span><h4>Time on page</h4><p>Decrease time spent on the product listing page.</p></div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="cs-section tight reveal">
+    <div class="cs-label"><span class="dot"></span>Research</div>
+    <div class="cs-prose">
+      <h3>Listening to investors and the sales team.</h3>
+      <p>Together with the UX Researcher, we conducted user interviews with five investors and members of the sales team. Four insights stood out:</p>
+    </div>
+    <div class="cs-bento">
+      <div class="cell"><span class="n">1</span><h4>Listing page usability</h4><p>Users struggle to find available products and compare asset classes.</p></div>
+      <div class="cell"><span class="n">2</span><h4>Card information hierarchy</h4><p>Users find the image uninformative and prefer more relevant product details.</p></div>
+      <div class="cell"><span class="n">3</span><h4>Past offerings display</h4><p>Users question the relevance of matured offerings since they can no longer invest in them.</p></div>
+      <div class="cell"><span class="n">4</span><h4>Rigid offering setup</h4><p>The sales team wants more flexibility to configure product information for better selling.</p></div>
+    </div>
+  </section>
+
+  <!-- UX AUDIT -->
+  <section class="cs-section reveal">
+    <div class="cs-label"><span class="dot"></span>UX audit</div>
+    <div class="cs-prose">
+      <h3>Auditing the old design.</h3>
+      <p>I conducted a UX audit of the old design, identifying pain points and potential areas of improvement.</p>
+      <figure class="cs-figure">
+        <img class="cs-img" src="https://cdn.prod.website-files.com/64f34489ccd100a57da8e9a1/669f9e7413f38e2c9f089899_before.png" alt="UX audit of the old product listing page design" loading="lazy" />
+      </figure>
+    </div>
+    <div class="cs-bento">
+      <div class="cell"><span class="n">1</span><h4>Hidden filters</h4><p>Filters are only accessible through the filter icon — fewer than 5% of users use them to find products.</p></div>
+      <div class="cell"><span class="n">2</span><h4>No results header</h4><p>There's no header showing the number of available offerings.</p></div>
+      <div class="cell"><span class="n">3</span><h4>Disproportionate cards</h4><p>The image-to-content ratio of each invest card is off, and information hierarchy needs improvement.</p></div>
+      <div class="cell"><span class="n">4</span><h4>Cramped first view</h4><p>In the first view, users see only one invest card and part of the next product's image.</p></div>
+    </div>
+  </section>
+
+  <!-- TARGET USERS -->
+  <section class="cs-section reveal">
+    <div class="cs-label"><span class="dot"></span>Target users</div>
+    <div class="cs-prose">
+      <h3>Targeting self-directed, proficient investors for high ROI.</h3>
+      <p>Focusing on confident, self-directed investors was expected to yield the highest return on the redesign effort.</p>
+      <figure class="cs-figure">
+        <img class="cs-img" src="https://cdn.prod.website-files.com/64f34489ccd100a57da8e9a1/669fda42ea1643143de038ee_Frame%20427318836.png" alt="Target user profile — self-directed, proficient investors" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- PROCESS: IDEATION -->
+  <section class="cs-section reveal">
+    <div class="cs-label"><span class="dot"></span>Process · Ideation</div>
+    <div class="cs-prose">
+      <h3>A Crazy 8s workshop across departments.</h3>
+      <p>I ran a Crazy 8s design workshop to facilitate cross-department collaboration. Product Designers, Product Managers and business stakeholders all contributed fresh ideas.</p>
+      <figure class="cs-figure">
+        <img class="cs-img" src="https://cdn.prod.website-files.com/64f34489ccd100a57da8e9a1/669fd4c0b5b19b596de60bea_Frame%20427318835.png" alt="Crazy 8s ideation workshop" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- PROCESS: CONCEPT TESTING -->
+  <section class="cs-section reveal">
+    <div class="cs-label"><span class="dot"></span>Process · Concept testing</div>
+    <div class="cs-prose">
+      <h3>Internal concept testing on Maze.</h3>
+      <p>I ran internal concept testing on Maze with stakeholders, presenting two design variations to gather feedback. The goal was to assess how effectively each conveyed key information — making sure the final design aligned with both stakeholder needs and user expectations.</p>
+    </div>
+    <div class="cs-duo">
+      <figure style="margin:0"><img class="cs-shot" src="https://cdn.prod.website-files.com/64f34489ccd100a57da8e9a1/6799e5568bca152f9720a5fb_Frame%20427318899.png" alt="Concept testing — design variation A" loading="lazy" /></figure>
+      <figure style="margin:0"><img class="cs-shot" src="https://cdn.prod.website-files.com/64f34489ccd100a57da8e9a1/6799e63957cba693b34281cb_Frame%20427318900.png" alt="Concept testing — design variation B" loading="lazy" /></figure>
+    </div>
+  </section>
+
+  <!-- FINAL: PRODUCT LISTING -->
+  <section class="cs-wide reveal">
+    <div class="cs-wide-head">
+      <div class="cs-label"><span class="dot"></span>Final solution · Product listing</div>
+      <h2>Better categorisation, visible filters, clearer cards.</h2>
+    </div>
+    <figure style="margin:0">
+      <img class="cs-shot" src="https://cdn.prod.website-files.com/64f34489ccd100a57da8e9a1/669faec0174f06c396cf7350_after.png" alt="Final redesigned product listing page" loading="lazy" />
+    </figure>
+    <div class="cs-bento" style="margin-top:clamp(28px,4vw,44px)">
+      <div class="cell"><span class="n">1</span><h4>Exposed filters</h4><p>Increased visibility of filters by exposing some of them just below the tabs.</p></div>
+      <div class="cell"><span class="n">2</span><h4>Section headers</h4><p>Headers to indicate what products are being shown.</p></div>
+      <div class="cell"><span class="n">3</span><h4>‘New’ tag</h4><p>Addition of a 'new' tag to inform users of new investment products.</p></div>
+      <div class="cell"><span class="n">4</span><h4>Admin control</h4><p>Customisable product details from the admin portal.</p></div>
+    </div>
+  </section>
+
+  <!-- FINAL: FILTER SHEET + PAST OFFERINGS -->
+  <section class="cs-wide reveal">
+    <div class="cs-wide-head">
+      <div class="cs-label"><span class="dot"></span>Final solution · Filters & past offerings</div>
+      <h2>A clearer filter sheet, and past offerings that build confidence.</h2>
+    </div>
+    <div class="cs-stack">
+      <figure style="margin:0">
+        <img class="cs-shot" src="https://cdn.prod.website-files.com/64f34489ccd100a57da8e9a1/679b26383aa6b0739b29d92e_Frame%20427318908.png" alt="Final filter sheet with updated selection options" loading="lazy" />
+        <figcaption style="margin-top:14px">Filter sheet with updated selection options</figcaption>
+      </figure>
+      <figure style="margin:0">
+        <img class="cs-shot" src="https://cdn.prod.website-files.com/64f34489ccd100a57da8e9a1/679b294fe15c5e58771e4940_Frame%20427318909.png" alt="Past offerings showing amount raised to build user confidence" loading="lazy" />
+        <figcaption style="margin-top:14px">Past offerings, now configurable and showing amount raised</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- IMPACT -->
+  <section class="cs-section reveal">
+    <div class="cs-label"><span class="dot"></span>Impact</div>
+    <div class="cs-prose">
+      <h3>We surpassed our target for listing-to-detail conversion. 🥳</h3>
+      <p>The redesigned product listing page beat its goal for conversion rate from product listing to product detail page.</p>
+      <figure class="cs-figure">
+        <img class="cs-img" src="https://cdn.prod.website-files.com/64f34489ccd100a57da8e9a1/66b75b1802b7325207cdf958_Frame%20427318855.png" alt="Impact — conversion rate from listing to detail page surpassed target" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+
+</main>
+
+<!-- NEXT PROJECT -->
+<section class="section-pad" style="padding-top:0">
+  <div class="wrap">
+    <div class="block-head reveal" style="margin-bottom: clamp(24px, 4vh, 40px)">
+      <span class="eyebrow">Up next</span>
+      <h2>Keep exploring.</h2>
+    </div>
+    <div class="case-list">
+      <a class="case reveal" href="Case Study 3.html" style="--d:0ms">
+        <div class="case-copy">
+          <div class="case-top">
+            <span class="case-eyebrow">Next project</span>
+            <h3 class="case-title">Improving the user interface foundations — Design System 2.0.</h3>
+          </div>
+        </div>
+        <div class="case-media">
+          <img class="case-slot" src="assets/addx-buttons.png" alt="ADDX Design System 2.0 button styles" />
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script src="theme-toggle.js"></script>
+<script src="image-slot.js"></script>
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (navToggle) {
+    const setOpen = (open) => {
+      nav.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    navToggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+    navLinks.addEventListener('click', (e) => { if (e.target.tagName === 'A') setOpen(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  }
+
+  // Page-load entrance (failsafe-protected).
+  const loadEls = document.querySelectorAll('.load-up, .load-fade');
+  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
+  setTimeout(() => {
+    document.body.classList.add('loaded');
+    loadEls.forEach((el) => {
+      if (getComputedStyle(el).opacity === '0') {
+        el.style.transition = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; el.style.filter = 'none';
+      }
+    });
+  }, 1500);
+
+  // Scroll reveal with hard failsafe.
+  const reveals = document.querySelectorAll('.reveal');
+  const reveal = (el) => el.classList.add('in');
+  const hardShow = (el) => { el.style.transition = 'none'; el.classList.add('in'); el.style.opacity = '1'; el.style.transform = 'none'; };
+  let io;
+  try {
+    io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    reveals.forEach((el) => io.observe(el));
+  } catch (err) { reveals.forEach(hardShow); }
+  requestAnimationFrame(() => {
+    reveals.forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < window.innerHeight * 0.92) hardShow(el); });
+  });
+  setTimeout(() => document.querySelectorAll('.reveal:not(.in)').forEach(hardShow), 1400);
+</script>
+
+</body>
+</html>
