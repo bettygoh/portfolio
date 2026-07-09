@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en" data-work="grid" data-motion="orb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Betty — UX Designer, Singapore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="assets/betty-monogram-ring-ink.svg" />
+<link rel="stylesheet" href="portfolio.css" />
+<style>
+  /* ---- Card layout v2: text above, image in a light container below ---- */
+  .case-list { gap: clamp(56px, 8vw, 104px); }
+  .case {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 1.8vw, 24px);
+    min-height: 0;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--ink);
+    overflow: visible;
+  }
+  .case:hover { transform: none; box-shadow: none; }
+  /* text block sits on the page, above the card */
+  .case-copy { gap: 0; }
+  .case-top { max-width: 64ch; gap: 8px; }
+  .case:hover .case-eyebrow,
+  .case:hover .case-title,
+  .case:hover .case-desc { transform: none; }
+  .case-eyebrow {
+    color: var(--accent-press);
+    opacity: 1;
+    letter-spacing: 0.14em;
+  }
+  .case-title {
+    font-family: var(--font-head);
+    font-weight: 600;
+    color: var(--ink);
+    font-size: clamp(24px, 2.6vw, 34px);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+  }
+  .case-desc { display: none; }
+  .case-tags { display: none; }
+  .case-go { display: none; }
+  /* the image container */
+  .case-media {
+    position: relative;
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: clamp(18px, 2vw, 28px);
+    background: var(--bg-2);
+    overflow: hidden;
+  }
+  /* real images render at natural height (not cropped) */
+  .case-media img.case-slot {
+    position: static;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .case:hover .case-media img.case-slot { transform: scale(1.02); }
+  /* empty slots keep a fixed frame */
+  .case-media:has(image-slot) { aspect-ratio: 16 / 10; }
+  .case-media image-slot.case-slot { position: absolute; inset: 0; width: 100%; height: 100%; }
+  @media (max-width: 860px) {
+    .case { gap: clamp(14px, 4vw, 20px); }
+    .case-copy { order: 0; }
+    .case-media { order: 0; margin: 0; aspect-ratio: auto; }
+  }
+
+  /* ---- Cute landing loader ---- */
+  #loader {
+    position: fixed; inset: 0; z-index: 10000;
+    display: grid; place-items: center;
+    background:
+      radial-gradient(120% 120% at 50% 0%, #FCF8F1 0%, var(--bg, #fbf8f1) 55%);
+    transition: opacity .7s var(--ease, ease), visibility .7s var(--ease, ease);
+  }
+  #loader.done { opacity: 0; visibility: hidden; }
+  html.is-loading, html.is-loading body { overflow: hidden; }
+  .l-stack { display: flex; flex-direction: column; align-items: center; gap: 26px; }
+  .l-anim { width: clamp(230px, 62vw, 340px); height: auto; }
+  .l-anim svg { display: block; }
+  .l-coffee { position: relative; width: 320px; max-width: 74vw; }
+  .l-coffee .cup {
+    width: 100%; height: auto; display: block;
+    mix-blend-mode: multiply;
+    animation: l-bob 2.8s ease-in-out infinite;
+  }
+  /* the pour stream falling into the cup */
+  .l-coffee .pour {
+    position: absolute; left: 56.3%; top: -26%; width: 7px; height: 70%;
+    margin-left: -3.5px; border-radius: 5px;
+    background: linear-gradient(#7a4a2c, #9c6238);
+    transform: scaleY(0); transform-origin: top center;
+    animation: l-pour 3s ease-in forwards;
+    z-index: 3;
+  }
+  /* ripple where the stream lands on the surface */
+  .l-coffee .ripple {
+    position: absolute; left: 56.3%; top: 43%; width: 36px; height: 13px;
+    margin-left: -18px; border: 2px solid #6b3f26; border-radius: 50%;
+    opacity: 0; transform: scale(.4); z-index: 3;
+    animation: l-ripple 0.95s ease-out 0.5s 3;
+  }
+  /* steam rising after the pour */
+  .l-coffee .steam {
+    position: absolute; left: 56.3%; top: 6%; transform: translateX(-50%);
+    display: flex; gap: 11px; z-index: 2;
+  }
+  .l-coffee .steam span {
+    width: 5px; height: 36px; border-radius: 6px;
+    background: linear-gradient(#cdbcae, rgba(205,188,174,0));
+    opacity: 0; animation: l-steam 2.3s ease-in-out infinite;
+  }
+  .l-coffee .steam span:nth-child(2) { height: 46px; animation-delay: .5s; }
+  .l-coffee .steam span:nth-child(3) { animation-delay: 1s; }
+  .l-word {
+    font-family: var(--font-head, system-ui); font-weight: 600;
+    font-size: 17px; letter-spacing: 0.02em; color: var(--ink, #161A23);
+  }
+  .l-bar {
+    width: 190px; height: 4px; border-radius: 999px;
+    background: color-mix(in oklab, var(--ink, #161A23), transparent 90%);
+    overflow: hidden;
+  }
+  .l-bar i {
+    display: block; height: 100%; width: 0; border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent, #3A6DF0), #E86AA6);
+    animation: l-fill 3s cubic-bezier(.45,.05,.2,1) forwards;
+  }
+  .l-msg {
+    font-family: var(--font-body, system-ui); font-size: 13.5px;
+    color: var(--muted, #8a90a0); min-height: 1.2em; text-align: center;
+    transition: opacity .35s ease;
+  }
+  @keyframes l-pour {
+    0% { transform: scaleY(0); opacity: 0; }
+    10% { opacity: 1; }
+    38% { transform: scaleY(1); opacity: 1; }
+    66% { transform: scaleY(1); opacity: 1; }
+    82%, 100% { transform: scaleY(1); opacity: 0; }
+  }
+  @keyframes l-ripple {
+    0% { opacity: .55; transform: scale(.4); }
+    100% { opacity: 0; transform: scale(1.25); }
+  }
+  @keyframes l-steam {
+    0% { transform: translateY(10px) scaleY(.5); opacity: 0; }
+    35% { opacity: .55; }
+    100% { transform: translateY(-22px) scaleY(1.15); opacity: 0; }
+  }
+  @keyframes l-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+  @keyframes l-fill { to { width: 100%; } }
+  @media (prefers-reduced-motion: reduce) {
+    .l-bar i { width: 100%; animation: none; }
+  }
+
+  /* ---- More animation: scroll progress, cursor glow, card tilt, nav shrink ---- */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+    background: linear-gradient(90deg, var(--accent), #E86AA6);
+    z-index: 9999; transition: width 0.12s linear;
+  }
+  :root[data-anim-progress="off"] .scroll-progress { display: none; }
+
+  .cursor-glow {
+    position: absolute; top: 0; left: 0; width: 460px; height: 460px;
+    margin-left: -230px; margin-top: -230px; border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in oklab, var(--accent), transparent 74%) 0%, transparent 70%);
+    pointer-events: none; opacity: 0; transition: opacity 0.5s ease;
+    z-index: 0; filter: blur(6px);
+  }
+  .hero-stage.glow-on .cursor-glow { opacity: 1; }
+  :root[data-anim-glow="off"] .cursor-glow { display: none; }
+
+  .nav { transition: border-color 0.4s var(--ease), background 0.4s var(--ease), padding 0.35s var(--ease); }
+  .nav.shrink { padding-top: 10px; padding-bottom: 10px; }
+  .brand-mark { transition: height 0.35s var(--ease); }
+  .nav.shrink .brand-mark { height: 24px; }
+
+  .case-media { transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease); transform-style: preserve-3d; will-change: transform; }
+  :root[data-anim-tilt="off"] .case-media { transform: none !important; }
+  .case-media img.case-slot { transition: transform 0.35s var(--ease); }
+</style>
+<template id="__bundler_thumbnail" data-bg-color="#0c0e14">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0c0e14"/>
+    <circle cx="600" cy="360" r="150" fill="none" stroke="#3A6DF0" stroke-width="10"/>
+    <circle cx="690" cy="300" r="70" fill="#E86AA6" opacity="0.55"/>
+    <text x="600" y="410" font-family="Georgia, serif" font-size="170" font-style="italic" fill="#ffffff" text-anchor="middle">B</text>
+    <text x="600" y="560" font-family="Helvetica, Arial, sans-serif" font-size="44" letter-spacing="6" fill="#ffffff" text-anchor="middle">BETTY GOH</text>
+    <text x="600" y="610" font-family="Helvetica, Arial, sans-serif" font-size="24" letter-spacing="3" fill="#8a90a0" text-anchor="middle">UX DESIGNER · SINGAPORE</text>
+  </svg>
+</template>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- ===================== LOADER ===================== -->
+<div id="loader" role="status" aria-label="Loading">
+  <div class="l-stack">
+    <svg class="l-whippet" viewBox="0 0 300 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- cushion -->
+      <ellipse cx="150" cy="172" rx="122" ry="26" fill="#E9E7EE"/>
+      <ellipse cx="150" cy="167" rx="108" ry="19" fill="#F2F0F6"/>
+      <!-- breathing body group -->
+      <g class="wp-breathe">
+        <!-- tail curling around to the front -->
+        <path d="M214,150 Q256,146 260,112 Q261,94 247,88 Q258,106 240,120 Q220,134 200,148 Z" fill="#FBFBFE" stroke="#E2DEEA" stroke-width="1.6"/>
+        <!-- body (curled loaf) -->
+        <path id="wp-body" d="M74,152 Q56,108 100,90 Q152,66 212,92 Q260,114 246,152 Z" fill="#FBFBFE" stroke="#E2DEEA" stroke-width="2"/>
+        <clipPath id="wp-bodyclip"><path d="M74,152 Q56,108 100,90 Q152,66 212,92 Q260,114 246,152 Z"/></clipPath>
+        <g clip-path="url(#wp-bodyclip)">
+          <path d="M150,78 Q210,80 232,122 Q240,152 196,154 Q150,154 150,108 Z" fill="#CBA482"/>
+          <g stroke="#B5895F" stroke-width="3" opacity="0.55" fill="none" stroke-linecap="round">
+            <path d="M168,90 q7,22 3,52"/>
+            <path d="M188,88 q8,24 5,56"/>
+            <path d="M208,96 q7,22 6,50"/>
+          </g>
+        </g>
+        <!-- front leg + paw tucked -->
+        <ellipse cx="108" cy="152" rx="15" ry="8" fill="#FBFBFE" stroke="#E2DEEA" stroke-width="1.6"/>
+        <path d="M100,152 Q96,134 110,128 Q124,124 128,134 Q114,138 116,152 Z" fill="#FBFBFE" stroke="#E2DEEA" stroke-width="1.6"/>
+      </g>
+      <!-- head resting (static) -->
+      <g class="wp-head">
+        <path d="M100,92 Q72,96 61,120 Q54,136 72,142 Q96,144 104,122 Q108,104 100,92 Z" fill="#FBFBFE" stroke="#E2DEEA" stroke-width="2"/>
+        <!-- long snout resting left -->
+        <path d="M70,132 Q44,135 24,143 Q17,146 22,151 Q44,149 73,143 Z" fill="#FBFBFE" stroke="#E2DEEA" stroke-width="1.8"/>
+        <ellipse cx="23" cy="147" rx="5" ry="4.2" fill="#3A3340"/>
+        <!-- folded rose ear -->
+        <path d="M96,98 Q110,84 118,94 Q115,107 99,110 Z" fill="#F3D9E2" stroke="#E2DEEA" stroke-width="1.5"/>
+        <!-- closed sleepy eye -->
+        <path d="M70,122 q9,6 18,0" fill="none" stroke="#3A3340" stroke-width="2.4" stroke-linecap="round"/>
+      </g>
+      <!-- z z z -->
+      <g class="wp-z" fill="#B9CFEF" font-weight="700" font-family="'Schibsted Grotesk', system-ui, sans-serif">
+        <text class="z1" x="126" y="72" font-size="15">z</text>
+        <text class="z2" x="142" y="56" font-size="19">z</text>
+        <text class="z3" x="160" y="38" font-size="25">z</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav" id="nav">
+  <a class="brand" href="#top"><img class="brand-mark" src="assets/betty-wordmark-sans.svg" alt="Betty" /></a>
+  <div class="nav-end">
+    <div class="nav-links" id="navLinks">
+      <div class="nav-item-drop">
+        <a href="Work.html" class="nav-drop-trigger">Work <svg class="chev" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="nav-drop">
+          <a href="Work.html" class="nav-drop-all">All work <span class="arrow">→</span></a>
+          <a href="Case Study.html"><span class="num">01</span>Increasing app downloads with redesigned app store previews.</a>
+          <a href="Case Study 2.html"><span class="num">02</span>Enhancing product discovery for investors.</a>
+          <a href="Case Study 3.html"><span class="num">03</span>Design System 2.0 — interface foundations.</a>
+        </div>
+      </div>
+      <a href="About.html">About</a>
+      <a href="#contact" class="cta">Let's talk</a>
+    </div>
+    <div class="theme-toggle" role="group" aria-label="Theme">
+      <button type="button" data-theme-choice="light" aria-label="Light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <button type="button" data-theme-choice="dark" aria-label="Dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></button>
+      <button type="button" data-theme-choice="system" aria-label="System theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero" id="top" style="padding: 200px 0px 120px">
+  <div class="hero-stage load-fade" aria-hidden="true">
+    <div class="orb a"></div>
+    <div class="orb b"></div>
+    <div class="orb c"></div>
+    <div class="lines">
+      <span style="top:22%; animation-delay:0s"></span>
+      <span style="top:40%; animation-delay:2.4s"></span>
+      <span style="top:58%; animation-delay:4.6s"></span>
+      <span style="top:74%; animation-delay:6.8s"></span>
+    </div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="hero-grid">
+      <p class="hero-lede load-up" style="--ld: 80ms; position: relative; font-size: 40px">Hi, I'm Betty. Currently a UX Designer based in Singapore. Designing for <a href="https://www.crowdtask.gov.sg/" style="color: var(--ink); text-decoration-line: none">CrowdTaskSG</a>. Previously at <a href="https://addx.co/en/" style="color: var(--ink); text-decoration-line: none">ADDX</a>.</p>
+      <div class="hero-meta" style="--ld:200ms">
+        <a class="chip" href="https://www.linkedin.com/in/betty-goh/resume" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="chip-ic" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"/></svg>LinkedIn</a>
+        <a class="chip" href="assets/Betty-Goh-Resume.pdf" target="_blank" rel="noopener" aria-label="Résumé"><svg class="chip-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M8.5 13h7M8.5 17h7"/></svg>Résumé ↗</a>
+      </div>
+    </div>
+  </div>
+
+</header>
+
+<!-- ===================== WORK ===================== -->
+<section class="section-pad" id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 style="font-family: var(--font-display); font-weight: 500; font-size: 40px">Selected work</h2>
+    </div>
+    <p class="section-sub reveal" style="--d:80ms">A few things I've shipped. </p>
+
+    <div class="case-list">
+
+      <a class="case reveal" href="Case Study.html" style="--cbg:#1C2A5E; --cink:#EAF0FF; --d:0ms">
+        <div class="case-copy">
+          <div class="case-top">
+            <span class="case-eyebrow">01 · Oct 2024</span>
+            <h3 class="case-title">Redesigning the app store preview screens to increase app downloads and user growth</h3>
+            <p class="case-desc">Updating the app's App Store preview screens — unchanged since 2021 — to better reflect its current features and appeal to potential users.</p>
+          </div>
+          <div class="case-tags"><span>App Store</span><span>Mobile</span><span>Growth</span></div>
+        </div>
+        <div class="case-media">
+          <img class="case-slot" src="assets/addx-appstore.png" alt="ADDX App Store listing" style="object-fit: cover; object-position: center top;" />
+        </div>
+        <span class="case-go" aria-hidden="true">↗</span>
+      </a>
+
+            <a class="case reveal" href="Case Study 2.html" style="--cbg:#D9602C; --cink:#FFF2EA; --d:80ms">
+        <div class="case-copy">
+          <div class="case-top">
+            <span class="case-eyebrow">02 · September 2023</span>
+            <h3 class="case-title" style="font-weight: 600">Enhancing the product discovery experience for investors to make confident investment decisions</h3>
+            <p class="case-desc">Redesigning ADDX's product listing page — clearer cards, visible filters, better discovery — to turn new sign-ups into active investors.</p>
+          </div>
+          <div class="case-tags"><span>Fintech</span><span>Product discovery</span><span>App + Web</span></div>
+        </div>
+        <div class="case-media">
+          <img class="case-slot" src="assets/addx-offerings.png" alt="ADDX invest offerings on desktop and mobile" style="object-fit: cover; object-position: center;" />
+        </div>
+        <span class="case-go" aria-hidden="true">↗</span>
+      </a>
+
+      <a class="case reveal" href="Case Study 3.html" style="--cbg:#1F5E54; --cink:#E9F6F1; --d:0ms">
+        <div class="case-copy">
+          <div class="case-top">
+            <span class="case-eyebrow">03 · April 2024</span>
+            <h3 class="case-title">Improving the user interface foundations - 
+Design System 2.0</h3>
+            <p class="case-desc">Rebuilding ADDX's design system — unified buttons, type and components across app and web, with real engineering adoption.</p>
+          </div>
+          <div class="case-tags"><span>Design system</span><span>Components</span><span>App + Web</span></div>
+        </div>
+        <div class="case-media">
+          <img class="case-slot" src="assets/addx-buttons.png" alt="ADDX Design System 2.0 — button styles spec" style="object-fit: cover; object-position: left top;" />
+        </div>
+        <span class="case-go" aria-hidden="true">↗</span>
+      </a>
+
+    </div>
+
+    <div class="work-cta reveal" style="--d:60ms">
+      <a class="btn btn-primary" href="Work.html">View all work <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="about section-pad" id="about">
+  <div class="wrap">
+    <div class="about-inner">
+      <div class="about-body reveal" style="--d:120ms">
+        <div class="about-id-text">
+          <div class="who">Betty Goh</div>
+          <div class="role">UX Designer · GovTech, Singapore</div>
+        </div>
+        <p class="lead">I design screens, and I'm a little obsessed with the small details.</p>
+        <p>Today I design citizen-facing services at GovTech @ CrowdTaskSG.</p>
+        <p>Before this, I spent 3.5 years in fintech designing for accredited investors.</p>
+        <p>
+</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-row">
+      <div class="contact-main">
+        <span class="eyebrow reveal">Get in touch</span>
+        <a class="mailto reveal" style="--d:60ms" href="mailto:gohlisingbetty@gmail.com">gohlisingbetty@gmail.com↗</a>
+        <p class="reveal" style="--d:120ms">Thanks for stopping by.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <span>© 2026 Betty Goh · Designed in Singapore 🇸🇬</span>
+  <a href="#top">Back to top ↑</a>
+</footer>
+
+<!-- Tweaks mount -->
+<div id="tweaks-root"></div>
+
+<script src="theme-toggle.js"></script>
+<script src="image-slot.js"></script>
+
+<!-- ===================== INTERACTIONS ===================== -->
+<script>
+  // Nav border + shrink on scroll, and scroll progress bar
+  const nav = document.getElementById('nav');
+  const progressBar = document.getElementById('scrollProgress');
+  const onScroll = () => {
+    const y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 24);
+    nav.classList.toggle('shrink', y > 80);
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - doc.clientHeight;
+    if (progressBar) progressBar.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Cursor-following glow in the hero
+  const heroStage = document.querySelector('.hero-stage');
+  const glow = document.querySelector('.cursor-glow');
+  if (heroStage && glow) {
+    const heroHeader = document.getElementById('top');
+    heroHeader.addEventListener('mouseenter', () => heroStage.classList.add('glow-on'));
+    heroHeader.addEventListener('mouseleave', () => heroStage.classList.remove('glow-on'));
+    heroHeader.addEventListener('mousemove', (e) => {
+      const r = heroHeader.getBoundingClientRect();
+      glow.style.transform = `translate(${e.clientX - r.left}px, ${e.clientY - r.top}px)`;
+    });
+  }
+
+  // Subtle tilt on case-media, following the cursor
+  document.querySelectorAll('.case-media').forEach((media) => {
+    media.addEventListener('mousemove', (e) => {
+      if (document.documentElement.getAttribute('data-anim-tilt') === 'off') return;
+      const r = media.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      media.style.transform = `perspective(900px) rotateX(${(-py * 6).toFixed(2)}deg) rotateY(${(px * 8).toFixed(2)}deg) scale(1.015)`;
+    });
+    media.addEventListener('mouseleave', () => { media.style.transform = ''; });
+  });
+
+  // Mobile menu toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (navToggle) {
+    const setOpen = (open) => {
+      nav.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    navToggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+    navLinks.addEventListener('click', (e) => { if (e.target.tagName === 'A') setOpen(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  }
+  const loadEls = document.querySelectorAll('.load-up, .load-fade, .hero-meta .chip');
+  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
+  setTimeout(() => {
+    document.body.classList.add('loaded');
+    loadEls.forEach((el) => {
+      if (getComputedStyle(el).opacity === '0') {
+        el.style.transition = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+  }, 1500);
+
+  // Gentle fade/slide-in on scroll — with a hard failsafe so content
+  // NEVER stays hidden if the observer is throttled or never fires.
+  const reveals = document.querySelectorAll('.reveal');
+  // Smooth path (used by the observer once the compositor is ticking).
+  const reveal = (el) => el.classList.add('in');
+  // Hard path (immediate/failsafe): kill the transition so a frozen
+  // compositor clock can't pin the element at the transition's start value.
+  const hardShow = (el) => {
+    el.style.transition = 'none';
+    el.classList.add('in');
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  };
+  let io;
+  try {
+    io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    reveals.forEach((el) => io.observe(el));
+  } catch (err) {
+    reveals.forEach(hardShow);
+  }
+  // Reveal anything already in view immediately (no transition dependency).
+  requestAnimationFrame(() => {
+    reveals.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.92) hardShow(el);
+    });
+  });
+  // Catch-all: if anything is still hidden after 1.4s, force it visible.
+  setTimeout(() => document.querySelectorAll('.reveal:not(.in)').forEach(hardShow), 1400);
+</script>
+
+<!-- ===================== TWEAKS ===================== -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks-app.jsx"></script>
+
+<!-- ===================== LOADER SCRIPT ===================== -->
+<script>
+  (function () {
+    var html = document.documentElement;
+    html.classList.add('is-loading');
+    var loader = document.getElementById('loader');
+    function hide() {
+      if (loader) loader.classList.add('done');
+      html.classList.remove('is-loading');
+      setTimeout(function () { if (loader && loader.parentNode) loader.parentNode.removeChild(loader); }, 800);
+    }
+    window.setTimeout(hide, 3000);
+  })();
+</script>
+
+</body>
+</html>
