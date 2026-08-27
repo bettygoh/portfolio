@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" data-motion="off">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Growing a daily reading habit with the ReadSG Challenge — Betty Goh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..800;1,400..700&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="assets/betty-favicon-sans.svg" />
+<link rel="stylesheet" href="portfolio.css" />
+<style>
+  .case-list { gap: clamp(56px, 8vw, 104px); }
+  .case { display: flex; flex-direction: column; gap: clamp(16px, 1.8vw, 24px); min-height: 0; padding: 0; border-radius: 0; background: transparent; color: var(--ink); overflow: visible; }
+  .case:hover { transform: none; box-shadow: none; }
+  .case-copy { gap: 0; }
+  .case-top { max-width: 64ch; gap: 8px; align-items: flex-start; text-align: left; margin-inline: 0; }
+  .case:hover .case-eyebrow, .case:hover .case-title { transform: none; }
+  .case-eyebrow { color: var(--accent-press); opacity: 1; letter-spacing: 0.14em; }
+  .case-title { font-family: var(--font-head); font-weight: 500; color: var(--ink); font-size: 40px; line-height: 1.12; letter-spacing: -0.015em; }
+  .case-desc, .case-tags, .case-go { display: none; }
+  .case-media { position: relative; margin: 0; border: 1px solid var(--line); border-radius: clamp(18px, 2vw, 28px); background: var(--bg-2); overflow: hidden; }
+  .case-media img.case-slot { position: static; inset: auto; width: 100%; height: auto; display: block; }
+  .case:hover .case-media img.case-slot { transform: scale(1.02); }
+  body { --accent: #7A2E2E; --accent-press: #5E2222; }
+  .cs-cover-slot { display: block; width: 100%; height: auto; aspect-ratio: 16/9; margin-top: clamp(28px, 5vw, 52px); border-radius: 24px; overflow: hidden; background: transparent; }
+  .cs-figure-slot { display: block; width: 100%; aspect-ratio: 16/10; border-radius: 16px; overflow: hidden; }
+  .launched-pill { display: inline-flex; align-items: center; font-family: var(--font-head); font-size: 13px; font-weight: 500; letter-spacing: 0.02em; color: #b8590a; background: color-mix(in oklab, #b8590a 12%, var(--surface)); border: 1px solid color-mix(in oklab, #b8590a 30%, var(--line)); border-radius: 999px; padding: 1px 12px; margin-bottom: 0; }  #readsg-challenge-section { border-top: none; padding-top: 56px !important; }
+  .visit-btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-head); font-weight: 500; font-size: 15px; letter-spacing: 0.01em; color: var(--ink); text-decoration: none; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; transition: background 0.25s var(--ease), border-color 0.25s var(--ease), color 0.25s var(--ease); }
+  .visit-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+  .visit-btn:hover { background: var(--bg-2); border-color: color-mix(in oklab, var(--ink) 22%, var(--line)); }
+  .visit-btn:active { background: color-mix(in oklab, var(--ink) 8%, var(--bg-2)); }
+  .visit-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .sol-list { display: flex; flex-direction: column; gap: clamp(48px, 6vw, 88px); }
+  .sol { display: flex; flex-direction: column; gap: clamp(18px, 2.2vw, 26px); max-width: 72ch; }
+  .sol-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .sol-num { font-family: var(--font-head); font-weight: 500; font-size: 13px; letter-spacing: 0.14em; color: var(--accent-press); }
+  .sol-title { font-family: var(--font-head); font-weight: 500; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.18; letter-spacing: -0.01em; margin: 0; color: var(--ink); }
+  .sol-body { margin: 0; color: var(--ink-soft); font-size: 17px; line-height: 1.6; max-width: 66ch; text-wrap: pretty; }
+  .sol-media { margin: 0; border: 1px solid var(--line); border-radius: clamp(14px, 1.6vw, 20px); background: var(--bg-2); overflow: hidden; }
+  .sol-media { align-self: stretch; }
+  .sol-media image-slot, .sol-media video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: contain; }
+  .sol-media img { display: block; width: 100%; height: auto; }
+  
+
+  img.case-slot, img.cs-cover-slot, .sol-media img, .cs-figure img { opacity: 0; transition: opacity .5s ease; }
+  img.case-slot.ld, img.cs-cover-slot.ld, .sol-media img.ld, .cs-figure img.ld { opacity: 1; }
+</style>
+<template id="__bundler_thumbnail" data-bg-color="#3a1414">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#3a1414"/>
+    <text x="600" y="380" font-family="Georgia, serif" font-size="80" font-style="italic" fill="#ffffff" text-anchor="middle">ReadSG.</text>
+    <text x="600" y="560" font-family="Helvetica, Arial, sans-serif" font-size="24" letter-spacing="4" fill="#d9b8b8" text-anchor="middle">BETTY GOH — DEEP DIVE</text>
+  </svg>
+</template>
+</head>
+<body>
+
+
+<nav class="nav scrolled" id="nav">
+  <a class="brand" href="index.html"><img decoding="async" class="brand-mark" src="assets/betty-wordmark-sans.svg" alt="Betty" /></a>
+  <div class="nav-end">
+    <div class="nav-links" id="navLinks">
+      <div class="nav-item-drop">
+        <a href="work.html" class="nav-drop-trigger">Work <svg class="chev" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="nav-drop">
+          <a href="work.html" class="nav-drop-all">All work <span class="arrow">→</span></a>
+          <a href="readsg-challenge.html">Growing a daily reading habit with the ReadSG Challenge.</a>
+
+
+          <a href="app-store-previews.html">Increasing app downloads with redesigned app store previews.</a>
+          <a href="product-discovery.html">Enhancing product discovery for investors.</a>
+          <a href="design-system.html">Design System 2.0 — interface foundations.</a>
+        </div>
+      </div>
+      <a href="side-quests.html">Side quests</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="theme-toggle" role="group" aria-label="Theme">
+      <button type="button" data-theme-choice="light" aria-label="Light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <button type="button" data-theme-choice="dark" aria-label="Dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></button>
+      <button type="button" data-theme-choice="system" aria-label="System theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<header class="cs-hero">
+  <div class="wrap">
+    <a class="back load-up" href="work.html" style="--ld:0ms">← All work</a>
+    <div style="text-align:center; margin-top:0"><span class="launched-pill">Launching on 6th Sept 2026</span></div>
+    <span class="cs-eyebrow load-up" style="--ld:60ms; margin-top:4px">CrowdTaskSG, National Library Board, 2026</span>
+    <h1 class="cs-title load-up" style="--ld:120ms">Growing a daily reading habit with the ReadSG Challenge</h1>
+    <p class="cs-lede load-up" style="--ld:200ms">The ReadSG Challenge is NLB's national reading initiative that invites Singaporeans to rediscover the joy of reading through a simple daily reading habit. All it takes is 15 minutes a day to build a reading habit — that's about the time between three MRT stops, waiting for your bus, or enjoying your morning coffee. Small moments add up to big stories.</p>
+    <div class="load-up" style="--ld:240ms;display:none;justify-content:center;margin-top:24px;margin-bottom:24px" data-hidden-section="visit-button"><a class="visit-btn" href="https://www.crowdtask.gov.sg/quest/readsg-challenge" target="_blank" rel="noopener">Visit<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4l-8.5 8.5"/><path d="M18 14.5V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.5"/></svg></a></div>
+
+    <div class="cs-meta load-up" style="--ld:280ms">
+      <div class="m"><span class="k">Timeline</span><span class="v">Jun – Aug 2026</span></div>
+      <div class="m"><span class="k">Team</span><span class="v">1 PM, 1 SWE, 1 UX</span></div>
+      <div class="m"><span class="k">Tools</span><span class="v">Figma · Claude</span></div>
+    </div>
+    <img src="assets/readsg-cover.png" alt="ReadSG Challenge quest page" class="cs-cover-slot load-up" style="--ld:340ms" decoding="async" />
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="cs-section reveal" style="padding-bottom:0">
+    <div class="cs-label"><span class="dot"></span>Problem statement</div>
+    <div class="cs-prose">
+      <p>In the busyness of daily life, reading can easily become an occasional activity rather than a consistent habit. While NLB's Read for Books campaign sees strong participation, encouraging adults to sustain daily reading — and remain engaged beyond the campaign period — remains a challenge.</p>
+      <p>From a platform perspective, this presented an opportunity to explore how CrowdTaskSG could go beyond driving one-off campaign participation and help encourage sustained reading behaviours and longer-term engagement with NLB programmes.</p>
+    </div>
+  </section>
+
+  <section class="cs-section reveal" style="display:block;padding-top:32px;border-top:none">
+    <figure class="cs-figure" style="margin:0">
+      <img decoding="async" src="assets/readsg-banner.png" alt="ReadSG Challenge campaign banner" />
+    </figure>
+  </section>
+
+  <section class="cs-section reveal" id="readsg-challenge-section">
+    <div class="cs-label"><span class="dot"></span>Design challenge</div>
+    <div class="cs-prose">
+      <p>How might we use CrowdTaskSG to encourage adults to build a consistent reading habit while sustaining engagement with NLB beyond a single campaign?</p>
+    </div>
+  </section>
+
+  <section class="cs-section reveal" style="padding-top:56px">
+    <div class="cs-label"><span class="dot"></span>Objectives</div>
+    <div class="cs-prose">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div>
+          <h4 style="margin:0 0 6px;font-family:var(--font-head);font-weight:500;font-size:1.05rem">Primary objective</h4>
+          <ul style="margin:0;padding-left:1.1em">
+            <li>Build consistent reading habits by encouraging users to incorporate reading into their daily routines.</li>
+            <li>Drive participation in NLB programmes by creating stronger connections between digital engagement and Read for Books activities.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin:0 0 6px;font-family:var(--font-head);font-weight:500;font-size:1.05rem">Platform objective</h4>
+          <ul style="margin:0;padding-left:1.1em">
+            <li>Experiment with gamification for habit formation, using mechanics such as daily actions, progress tracking and rewards.</li>
+            <li>Create reusable engagement patterns that could be adapted for future campaigns and other government agencies.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section reveal" style="padding-top:56px;display:block">
+    <div class="cs-label" style="position:static;margin-bottom:16px"><span class="dot"></span>Success metrics</div>
+    <div class="cs-prose" style="max-width:none">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px)">
+        <div style="border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:var(--bg-2)">
+          <svg viewBox="0 0 24 24" fill="var(--accent)" style="width:24px;height:24px;display:block;margin-bottom:12px"><path d="M20 2H7.5A3.5 3.5 0 0 0 4 5.5v13A3.5 3.5 0 0 0 7.5 22H20a1 1 0 0 0 1-1v-2.2a1 1 0 0 0-1-1H7.5a1.3 1.3 0 0 1 0-2.6H20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/></svg><h4 style="margin:0 0 8px;font-family:var(--font-head);font-weight:500;font-size:1.6rem;line-height:1.1">205,200</h4>
+          <p style="margin:0">15-minute reading sessions</p>
+        </div>
+        <div style="border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:var(--bg-2)">
+          <svg viewBox="0 0 24 24" fill="oklch(0.62 0.13 68)" style="width:24px;height:24px;display:block;margin-bottom:12px"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 5v4.4l3.3 1.9a1.1 1.1 0 1 1-1.1 1.9l-3.8-2.2A1.1 1.1 0 0 1 10.8 12V7a1.1 1.1 0 0 1 2.2 0z"/></svg><h4 style="margin:0 0 8px;font-family:var(--font-head);font-weight:500;font-size:1.6rem;line-height:1.1">3.07 million</h4>
+          <p style="margin:0">total reading minutes</p>
+        </div>
+        <div style="border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:var(--bg-2)">
+          <svg viewBox="0 0 24 24" fill="oklch(0.52 0.07 232)" style="width:24px;height:24px;display:block;margin-bottom:12px"><circle cx="9" cy="7.5" r="3.8"/><path d="M9 13.2c-3.6 0-6.5 2.1-6.5 4.7V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2.1c0-2.6-2.9-4.7-6.5-4.7z"/><circle cx="17.4" cy="8.4" r="2.9" opacity=".55"/><path d="M17.4 12.8c-.6 0-1.2.07-1.7.2 1.3 1.2 2.1 2.8 2.1 4.5V21h3.7a1 1 0 0 0 1-1v-2c0-2.3-2.3-4.1-5.1-4.1z" opacity=".55"/></svg><h4 style="margin:0 0 8px;font-family:var(--font-head);font-weight:500;font-size:1.6rem;line-height:1.1">50,000</h4>
+          <p style="margin:0">unique users</p>
+        </div>
+      </div>
+      <p style="margin-top:20px">Beyond quantitative metrics, qualitative feedback and participant stories will also be collected through redemption events and online feedback surveys to understand the campaign's impact on reading behaviours and overall experience.</p>
+    </div>
+  </section>
+
+  <section class="cs-section reveal" style="padding-top:56px;display:none" data-hidden-section="user-problems">
+    <div class="cs-label"><span class="dot"></span>User problems</div>
+    <div class="cs-prose">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div>
+          <h4 style="margin:0 0 6px;font-family:var(--font-head);font-weight:500;font-size:1.05rem">Functional problems</h4>
+          <ul style="margin:0;padding-left:1.1em">
+            <li>No easy way to track reading habits</li>
+            <li>Limited motivation to read daily</li>
+            <li>Programme discovery may be fragmented</li>
+            <li>Logging reading may be inconvenient</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin:0 0 6px;font-family:var(--font-head);font-weight:500;font-size:1.05rem">Behavioural problems</h4>
+          <ul style="margin:0;padding-left:1.1em">
+            <li>Lack of visible progress</li>
+            <li>Lack of social reinforcement</li>
+            <li>Weak habit-formation triggers</li>
+            <li>Reading is not prioritised</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin:0 0 6px;font-family:var(--font-head);font-weight:500;font-size:1.05rem">Potential experience risks</h4>
+          <ul style="margin:0;padding-left:1.1em">
+            <li>Too many steps may reduce completion</li>
+            <li>Complex verification may reduce motivation</li>
+            <li>Too many task variants may confuse users</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section reveal">
+    <div class="cs-label"><span class="dot"></span>Process</div>
+    <div class="cs-prose">
+      <p>To align the team early, we used <strong>Claude</strong> to co-work our way from idea to something clickable — generating a JSX prototype first, then an HTML build we could put in front of stakeholders in days instead of weeks.</p>
+      <p>The prototype showcased the <strong>full vision of the CrowdTaskSG platform</strong>, not just the next sprint. From there we worked backwards, deciding which features were realistic to deliver for the <strong>NLB launch</strong> and which belonged in later phases.</p>
+    </div>
+  </section>
+
+  <section class="cs-section reveal" style="border-top:none;padding-top:0">
+    <div class="cs-label"><span class="dot"></span>Prototype</div>
+    <div class="cs-prose">
+      <p>This prototype was built in Claude Cowork as part of a vision exercise — envisioning the end goal and future state of CrowdTaskSG, and the platform capabilities we would want to build to get there. The ReadSG Challenge quest page came out of that exercise: a way to make the direction tangible rather than described.</p>
+    </div>
+  </section>
+
+  <section class="cs-section reveal" style="display:block;padding-top:0">
+    <figure style="display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:24px;margin:0">
+      <iframe src="prototypes/readsg-quest-page.html" title="ReadSG Challenge quest page prototype" loading="lazy" style="width:100%;max-width:430px;height:min(620px,72vh);border:1px solid var(--line);border-radius:12px;background:#fff"></iframe>
+      <figcaption style="font-size:.85rem;opacity:.7">Live prototype — scroll and tap inside the frame.</figcaption>
+    </figure>
+  </section>
+
+  <section class="cs-section reveal">
+    <div class="cs-label"><span class="dot"></span>Solution</div>
+    <div class="cs-prose">
+    </div>
+  </section>
+
+  <section class="cs-section reveal" style="display:block;padding-top:0;border-top:none">
+    <div class="sol-list">
+      <div class="sol">
+        <div class="sol-copy">
+          <span class="sol-num">01</span>
+          <h3 class="sol-title">All missions</h3>
+          <p class="sol-body">When a quest has multiple challenges running at once (a weekly habit loop plus several location-based hunts), users need a way to see everything available and decide where to spend their effort, instead of discovering objectives one at a time.</p>
+          </div>
+        <figure class="sol-media"><img decoding="async" src="assets/nlb-missions.png" alt="ReadSG Challenge quest page showing stats and the All missions card grid" loading="lazy" /></figure>
+        <div class="sol-copy" style="display:none">
+          <p class="sol-body"><strong>Design approach:</strong> A scannable 2-column card grid. Each card is designed to answer three questions at a glance — what is this, how far along am I, and what do I get for finishing. I used visual cues rather than text to communicate status fast: a circular progress ring wrapped around the icon for habit-style objectives, a map-pin badge for location-based ones, and a lock icon for anything not yet unlocked. A linear progress bar and reward line sit at the bottom of every card so comparison across objectives is consistent regardless of type.</p>
+        </div>
+      </div>
+      <div class="sol">
+        <div class="sol-copy">
+          <span class="sol-num">02</span>
+          <h3 class="sol-title">Objective bottom sheet</h3>
+          <p class="sol-body">Once a user taps into an objective, they need more depth (why should I care, what's my progress, what do I need to do) without leaving their place in the quest flow. A full page navigation would break momentum, so I used a bottom sheet — a lightweight modal that keeps context of what triggered it.</p>
+          </div>
+        <figure class="sol-media"><img decoding="async" src="assets/nlb-bottom-sheet.png" alt="Objective bottom sheet — Progress tab across three cycle states" loading="lazy" /></figure>
+        <div class="sol-copy" style="display:none">
+          <p class="sol-body"><strong>Design approach:</strong> One reusable sheet component serves both objective types, with the same shell (gradient header, close affordance, tabbed body) but different content underneath — this keeps the interaction pattern predictable across the whole quest experience even as content varies. I split the content into tabs (About / Progress / Activities, or About / Activities for map objectives) because these represent genuinely different user intents: understanding the challenge, checking status, and taking action. Defaulting to the Progress tab for recurring objectives and Activities for map objectives reflects what returning users actually want first — habit-trackers check their streak, explorers check what's left to do.</p>
+        </div>
+      </div>
+      <div class="sol">
+        <div class="sol-copy">
+          <span class="sol-num">03</span>
+          <h3 class="sol-title">Different types of cycles</h3>
+          <p class="sol-body">How cycles with an end date vs. cycles without an end date differ.</p>
+        </div>
+        <figure class="sol-media"><img decoding="async" src="assets/nlb-cycles.png" alt="Cycle states — locked upcoming cycle and an active cycle with progress and bonus rewards" loading="lazy" /></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section reveal">
+    <div class="cs-label"><span class="dot"></span>What I've learnt</div>
+    <div class="cs-prose">
+      <ul>
+        <li><strong>Designing the vision first made scoping easier.</strong> Once the team could see the full platform in a clickable prototype, deciding what to cut for the NLB launch became a conversation about sequence rather than a debate about value.</li>
+        <li><strong>Prototypes move stakeholders faster than decks.</strong> Putting something tappable in front of NLB surfaced real questions in one session that written specs had left ambiguous for weeks.</li>
+        <li><strong>Speed isn't the same as thinking it through.</strong> Claude got us to a working prototype fast, but it only builds the happy path — the empty, locked, expired and error states still had to be reasoned through and designed by hand. The time saved on building went straight into edge cases.</li>
+
+      </ul>
+    </div>
+  </section>
+</main>
+
+<section class="section-pad" style="padding-top:0">
+  <div class="wrap">
+    <div style="border-top:1px solid var(--line);padding-top:clamp(48px,6vw,88px)"><div data-project-carousel></div></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <span>© 2026 Betty Goh · Designed in Singapore 🇸🇬</span>
+  <a href="index.html">Back to home ↑</a>
+</footer>
+
+<script src="theme-toggle.js"></script>
+<script src="image-slot.js"></script>
+<script src="project-carousel.js"></script>
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (navToggle) {
+    const setOpen = (open) => { nav.classList.toggle('open', open); navToggle.setAttribute('aria-expanded', open ? 'true' : 'false'); };
+    navToggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+    navLinks.addEventListener('click', (e) => { if (e.target.tagName === 'A') setOpen(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  }
+  const loadEls = document.querySelectorAll('.load-up, .load-fade');
+  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
+  setTimeout(() => {
+    document.body.classList.add('loaded');
+    loadEls.forEach((el) => { if (getComputedStyle(el).opacity === '0') { el.style.transition = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; el.style.filter = 'none'; } });
+  }, 1500);
+  const reveals = document.querySelectorAll('.reveal');
+  const reveal = (el) => el.classList.add('in');
+  const hardShow = (el) => { el.style.transition = 'none'; el.classList.add('in'); el.style.opacity = '1'; el.style.transform = 'none'; };
+  let io;
+  try {
+    io = new IntersectionObserver((entries) => { entries.forEach((e) => { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } }); }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    reveals.forEach((el) => io.observe(el));
+  } catch (err) { reveals.forEach(hardShow); }
+  requestAnimationFrame(() => { reveals.forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < window.innerHeight * 0.92) hardShow(el); }); });
+  setTimeout(() => document.querySelectorAll('.reveal:not(.in)').forEach(hardShow), 1400);
+</script>
+<script>(function(){function mark(i){i.classList.add("ld")}document.querySelectorAll("img.case-slot,img.cs-cover-slot,.sol-media img,.cs-figure img").forEach(function(i){if(i.complete&&i.naturalWidth)mark(i);else i.addEventListener("load",function(){mark(i)},{once:true});i.addEventListener("error",function(){mark(i)},{once:true})})})();</script>
+<script src="project-gate.js"></script>
+</body>
+</html>
